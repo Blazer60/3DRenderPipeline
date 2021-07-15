@@ -1,0 +1,92 @@
+# Kirby by Lauren Eadey (12/07/2021)
+
+# mouth
+
+newmtl pCube1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\sHOES\\Korb_pCube1SG_BaseColor.png
+
+# Hat Bell
+
+newmtl pCylinder1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\Hatbrim\\Korb_pCylinder1SG_BaseColor.png
+
+newmtl pCylinder1SG1
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\Hat\\Korb_pCylinder1SG1_BaseColor.png
+
+newmtl pCylinder2SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\SwordBase\\Korb_pCylinder2SG_BaseColor.png
+
+newmtl pCylinder2SG1
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 4.31
+map_Kd ..\\res\\textures\\kirbytextures\\SwordBlade\\Korb_pCylinder2SG1_BaseColor.png
+
+newmtl pCylinder2SG2
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\SwordBase2\\Korb_pCylinder2SG2_BaseColor.png
+
+newmtl pCylinder3SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 4.31
+map_Kd ..\\res\\textures\\kirbytextures\\SwordYellow\\Korb_pCylinder3SG_BaseColor.png
+
+newmtl pSphere1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\Tongue\\Korb_pSphere1SG_BaseColor.png
+
+# Body / Face
+
+newmtl pSphere2SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\Kirby\\Korb_pSphere2SG_BaseColor.png
+
+# Kirby Mouth
+newmtl pSphere4SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Kd ..\\res\\textures\\kirbytextures\\KirbyMouth\\Korb_pSphere4SG_BaseColor.png
