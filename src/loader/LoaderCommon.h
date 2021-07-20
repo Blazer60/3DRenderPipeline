@@ -14,7 +14,6 @@
 #include <glm.hpp>
 #include <string>
 #include <charconv>
-#include <format>
 #include <unordered_map>
 #include <functional>
 
@@ -88,7 +87,8 @@ glm::vec<count, float, glm::defaultp> createVec(std::string_view args)
         auto [pointer, ec] = std::from_chars(nextNumber, nextNumber + args.size(), position[i]);
         if (ec != std::errc())  // An error was produced by the args list.
         {
-            throw std::exception(std::format("Invalid Args ({}) for Vector construction.", args).c_str());
+            // Invalid args (args) for vector construction.
+            throw std::exception();
         }
         nextNumber = pointer + 1;  // There is always a space between numbers.
     }

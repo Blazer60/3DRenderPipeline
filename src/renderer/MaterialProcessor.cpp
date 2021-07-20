@@ -8,7 +8,6 @@
 
 #include "MaterialProcessor.h"
 #include <glew.h>
-#include <format>
 
 
 MaterialProcessor::MaterialProcessor()
@@ -24,19 +23,29 @@ void MaterialProcessor::init()
         auto &mats = getComponent<std::vector<Material>>(entity);
         auto &textureMats = getComponent<std::vector<MaterialTexture>>(entity);
 
+        std::vector<std::string> kDPaths;
+        kDPaths.reserve(textureMats.size());
+        for (const auto &textureMat : textureMats)
+        {
+            kDPaths.emplace_back(textureMat.kDPath);
+        }
+
+        unsigned int kDiffusesId = TextureSystem::createTextureArray(kDPaths);
+
         std::vector<unsigned int> ids;
         ids.reserve(mats.size());
 
         for (int i = 0; i < mats.size(); i++)
         {
-            mats[i].kDTextureId = mTextureSystem.createTexture(textureMats[i].kDPath);
+            mats[i].kDTextureIndex = i;
             ids.emplace_back(addMaterial(mats[i]));
         }
 
-        if (ids.empty()) { ids = { mDefaultId }; }
+//        if (ids.empty()) { ids = { mDefaultId }; }
 
         auto &renderUniforms = getComponent<RendererUniforms>(entity);
         renderUniforms.materialIds = std::move(ids);
+        renderUniforms.diffuseTexturesId = kDiffusesId;
     }
 }
 
@@ -44,6 +53,7 @@ void MaterialProcessor::createDefaultMaterial()
 {
     Material defaultMat{ glm::vec3(1.f), glm::vec3(1.f), mTextureSystem.createTexture("") };
     mDefaultId = addMaterial(defaultMat);
+    mDefaultKDiffuseTextureId = TextureSystem::createTextureArray({""});
 }
 
 unsigned int MaterialProcessor::addMaterial(const Material &material)
@@ -64,36 +74,33 @@ void MaterialProcessor::unbind()
     Shader::unBind();
 }
 
-void MaterialProcessor::setupMaterials(const std::vector<unsigned int> &materialIds)
+void MaterialProcessor::setupMaterials(const std::vector<unsigned int> &materialIds, unsigned int diffuseTextureIds)
 {
-    glBindTextureUnit(0, 0);
-//    std::vector<int> textureIds;
-//    std::vector<glm::vec3> kDiffuse;
+    glActiveTexture(GL_TEXTURE0);
+    if (diffuseTextureIds == 0) { glBindTexture(GL_TEXTURE_2D_ARRAY, mDefaultKDiffuseTextureId); }
+    else { glBindTexture(GL_TEXTURE_2D_ARRAY, diffuseTextureIds); }
+    mShader.setUniform("u_kDiffuseTextures", 0);
+
     auto i = 0;
     for (const auto &id : materialIds)
     {
         // Find the material.
         auto material = mMaterials.at(id);
         // Set the uniforms based on that material.
-        glBindTextureUnit(i, material.kDTextureId);
-        mShader.setUniform(std::format("u_materials[{}].kAmbient", i), glm::vec4(material.kAmbient, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].kDiffuse", i), glm::vec4(material.kDiffuse, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].kDiffuseTexture", i), i);
-        mShader.setUniform(std::format("u_materials[{}].kSpecular", i), glm::vec4(material.kSpecular, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].nSpecular", i), material.nSpecular);
+        std::string stringI = std::to_string(i);
+        mShader.setUniform("u_materials[" + stringI + "].kAmbient", glm::vec4(material.kAmbient, 1.f));
+        mShader.setUniform("u_materials[" + stringI + "].kDiffuse", glm::vec4(material.kDiffuse, 1.f));
+        mShader.setUniform("u_materials[" + stringI + "].kSpecular", glm::vec4(material.kSpecular, 1.f));
+        mShader.setUniform("u_materials[" + stringI + "].nSpecular", material.nSpecular);
         i++;
     }
     if (materialIds.empty())
     {
         // Bind the default Texture.
         auto defaultMat = mMaterials[mDefaultId];
-        glBindTextureUnit(0, defaultMat.kDTextureId);
-        mShader.setUniform(std::format("u_materials[{}].kAmbient", i), glm::vec4(defaultMat.kAmbient, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].kDiffuse", i), glm::vec4(defaultMat.kDiffuse, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].kDiffuseTexture", i), i);
-        mShader.setUniform(std::format("u_materials[{}].kSpecular", i), glm::vec4(defaultMat.kSpecular, 1.f));
-        mShader.setUniform(std::format("u_materials[{}].nSpecular", i), defaultMat.nSpecular);
+        mShader.setUniform("u_materials[0].kAmbient", glm::vec4(defaultMat.kAmbient, 1.f));
+        mShader.setUniform("u_materials[0].kDiffuse", glm::vec4(defaultMat.kDiffuse, 1.f));
+        mShader.setUniform("u_materials[0].kSpecular", glm::vec4(defaultMat.kSpecular, 1.f));
+        mShader.setUniform("u_materials[0].nSpecular", defaultMat.nSpecular);
     }
-//    mShader.setUniform("u_textures", &textureIds[0], static_cast<int>(textureIds.size()));
-//    mShader.setUniform("u_colours", kDiffuse[0], static_cast<int>(kDiffuse.size()));
 }

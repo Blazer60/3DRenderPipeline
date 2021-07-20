@@ -32,7 +32,8 @@ float getFloat(std::string_view arg)
     auto [_, ec] = std::from_chars(arg.data(), arg.data() + arg.size(), value);
     if (ec != std::errc())  // An error was produced by the args list.
     {
-        throw std::exception(std::format("Invalid Argument ({}) for float construction.", arg).c_str());
+        // Invalid argument (arg) for float construction.
+        throw std::exception();
     }
     return value;
 }
@@ -60,10 +61,8 @@ void convertFile(std::string_view path,
         if (it != std::end(functionMap)) { it->second(args); } // Process the function.
         else
         {
-            throw std::exception(std::format(
-                    "Function ({}) could not be found.",
-                    functionName
-            ).c_str());
+            // Function (functionName) could not be found in functionMap.
+            throw std::exception();
         }
     }
 }

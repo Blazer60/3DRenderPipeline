@@ -17,7 +17,7 @@ public:
 
     void bind() const;
     static void unbind();
-    void setupMaterials(const std::vector<unsigned int> &materialIds);
+    void setupMaterials(const std::vector<unsigned int> &materialIds, unsigned int diffuseTextureIds);
     unsigned int addMaterial(const Material &material);
 
     Shader mShader { "../res/shaders/Default.shader" };
@@ -27,6 +27,7 @@ protected:
     TextureSystem mTextureSystem;
     unsigned int mRendererId { 0 };
     unsigned int mDefaultId{ 0 };
+    unsigned int mDefaultKDiffuseTextureId{ 0 };
 };
 
 

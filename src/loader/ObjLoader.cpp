@@ -43,7 +43,7 @@ ModelData loadObj(std::string_view path)
             { "g", [](std::string_view args){}},  // group
 
             {"mtllib", [&](std::string_view args){                      // Material Library.
-                auto pair = loadMat(std::format("../res/models/{}", args));
+                auto pair = loadMat("../res/models/" + std::string(args));
                 matMap = std::move(pair.first);
                 materials = std::move(pair.second);
             }},

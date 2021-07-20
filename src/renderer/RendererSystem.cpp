@@ -33,8 +33,7 @@ RendererSystem::RendererSystem()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, position)));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, normal)));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, uvCoord)));
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, textureId)));
-    // I don't know why, but even though texture Id is an int, it only likes it as a float?
+    glVertexAttribIPointer(3, 1, GL_INT, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, textureId)));
 
     glClearColor(0.16f, 0.16f, 0.16f, 1.f);
 }
@@ -70,7 +69,7 @@ void RendererSystem::render()
         // Process Uniforms
         mMaterialProcessor->mShader.setUniform("u_mvp", uniforms.mvp);
         mMaterialProcessor->mShader.setUniform("u_modelMat", uniforms.modelMat);
-        mMaterialProcessor->setupMaterials(uniforms.materialIds);
+        mMaterialProcessor->setupMaterials(uniforms.materialIds, uniforms.diffuseTexturesId);
 
         glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, nullptr);
     }

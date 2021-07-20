@@ -85,20 +85,20 @@ void Scene::registerEntities()
     mDirector.addComponent(cube, RendererUniforms());
 
     auto teapot = mDirector.createEntity();
-    mDirector.addComponent(teapot, Transform{ glm::vec3(0.f, 0.f, -5.f) });
-    mDirector.addComponent(teapot, loadModel("../res/models/SilverTeapot.obj"));
-
+    mDirector.addComponent(teapot, Transform{ glm::vec3(0.f, 1.f, -5.f) });
+    mDirector.addComponent(teapot, loadModel("../res/models/CubeTest.obj"));
+//
     auto tank = mDirector.createEntity();
-    mDirector.addComponent(tank, Transform{ glm::vec3(5.f, 0.f, 0.f) });
-    mDirector.addComponent(tank, loadModel("../res/models/CubeTest.obj"));
+    mDirector.addComponent(tank, Transform{ glm::vec3(15.f, 1.f, 0.f) });
+    mDirector.addComponent(tank, loadModel("../res/models/CubesTextures.obj"));
 
     auto kirb = mDirector.createEntity();
     mDirector.addComponent(kirb, Transform{
-            glm::vec3(-5.f, 0.f, 0.f),
+            glm::vec3(-15.f, 0.f, 0.f),
             glm::quat(),
-            glm::vec3(0.1f)
+            glm::vec3(1.f)
     });
-    mDirector.addComponent(kirb, loadModel("../res/models/Korb.obj"));
+    mDirector.addComponent(kirb, loadModel("../res/models/SphereTextures.obj"));
 
 //    auto light = mDirector.createEntity();
 //    mDirector.addComponent(light, PointLight { glm::vec3(1.f) });

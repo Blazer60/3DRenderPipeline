@@ -57,13 +57,14 @@ struct RendererUniforms
     glm::mat4 mvp           { 1.f };
     glm::mat4 modelMat { 1.f };
     std::vector <unsigned int> materialIds{};  // Not related to the uv index in vertices.
+    unsigned int diffuseTexturesId { 0 };
 };
 
 struct Material  // Materials are not needed for rendering. RenderUniforms are however.
 {
     glm::vec3 kAmbient          { 0.f };
     glm::vec3 kDiffuse          { 1.f };
-    unsigned int kDTextureId    { 0 };
+    unsigned int kDTextureIndex    { 0 };
     glm::vec3 kSpecular         { 1.f };
     float nSpecular             { 225 };
 };

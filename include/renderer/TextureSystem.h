@@ -20,6 +20,8 @@ class TextureSystem
 public:
     TextureSystem();
     unsigned int createTexture(const std::string &path);
+    static unsigned int createTextureArray(const std::vector<std::string> &paths);
+    static void createWhite(int width, int height, int index);
     void createWhite();
     static void setDefaultTextureParams();
 protected:

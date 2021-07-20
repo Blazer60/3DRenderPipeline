@@ -14,7 +14,7 @@ uniform mat4 u_modelMat;
 out vec2 v_texture_coord;
 out vec4 v_vertWorldPos;
 out vec4 v_normal;
-flat out int v_texture_id;
+out flat int v_texture_id;
 
 
 void main()
@@ -42,21 +42,19 @@ struct Material
 {
     vec4 kAmbient;
     vec4 kDiffuse;
-    sampler2D kDiffuseTexture;
     vec4 kSpecular;
     float nSpecular;
 };
 
-layout(location = 0) out vec4 o_colour;
-
 uniform Material u_materials[32];
 uniform PointLight u_lights[32];
 uniform vec4 u_cameraPosition;
+uniform sampler2DArray u_kDiffuseTextures;
 
 in vec4 v_normal;
 in vec2 v_texture_coord;
 in vec4 v_vertWorldPos;
-flat in int v_texture_id;
+in flat int v_texture_id;
 
 
 void main()
@@ -88,12 +86,13 @@ void main()
     diffuseColour.w = 1.0;
     specularColour.w = 1.0;
 
+    vec4 kDiffuseTexture = texture(u_kDiffuseTextures, vec3(v_texture_coord, v_texture_id));
 
     vec4 kAmbient = u_materials[v_texture_id].kAmbient;
-    vec4 kDiffuseTexture = texture(u_materials[v_texture_id].kDiffuseTexture, v_texture_coord);
     vec4 kDiffuse = u_materials[v_texture_id].kDiffuse;
     vec4 kSpecular = u_materials[v_texture_id].kSpecular;
-    o_colour =  kAmbient * kDiffuseTexture * ambientColour +
-                kDiffuse * kDiffuseTexture * diffuseColour +
-                kSpecular * specularColour;
+
+    gl_FragColor = kAmbient * kDiffuseTexture * ambientColour +
+                   kDiffuse * kDiffuseTexture * diffuseColour +
+                   kSpecular                  * specularColour;
 }

@@ -7,7 +7,6 @@
  */
 
 #include "PointLightTransformer.h"
-#include <format>
 
 void PointLightTransformer::calculateLightPositions(Shader &shader)
 {
@@ -16,7 +15,7 @@ void PointLightTransformer::calculateLightPositions(Shader &shader)
     {
         const auto &lightTransform = getComponent<Transform>(entity);
         shader.setUniform(
-                std::format("u_lights[{}].position", i),
+                "u_lights[" + std::to_string(i) + "].position",
                 glm::vec4(lightTransform.position, 1.f)
         );
         ++i;
@@ -33,18 +32,10 @@ void PointLightTransformer::setShaderLights(ecs::entity mainCamera, Shader &shad
     {
         const auto &light = getComponent<PointLight>(entity);
         const auto &lightPos = getComponent<Transform>(entity).position;
-        shader.setUniform(
-                std::format("u_lights[{}].colour", i),
-                glm::vec4(light.kDiffuse, 1.f)
-                );
-        shader.setUniform(
-                std::format("u_lights[{}].intensity", i),
-                light.intensity
-                );
-        shader.setUniform(
-                std::format("u_lights[{}].fallOff", i),
-                light.fallOff
-                );
+        std::string stringI = std::to_string(i);
+        shader.setUniform("u_lights[" + stringI + "].colour", glm::vec4(light.kDiffuse, 1.f));
+        shader.setUniform("u_lights[" + stringI + "].intensity", light.intensity);
+        shader.setUniform("u_lights[" + stringI + "].fallOff", light.fallOff);
         ++i;
     }
 }
