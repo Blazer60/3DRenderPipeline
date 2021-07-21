@@ -8,7 +8,7 @@
 
 #include "Core.h"
 #include "Scene.h"
-#include "GlDebugger.h"
+#include "DebugLogger.h"
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -18,6 +18,7 @@
 Core::Core(const glm::ivec2 &resolution)
     : mResolution(resolution)
 {
+    debug::clearLogs();
     if (!(initGlfw() && initOpenGl() && initImGui()))
     {
         mIsRunning = false;
@@ -61,9 +62,9 @@ bool Core::initOpenGl()
     // Debug Messaging.
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(glDebugger::debugMessageCallBack, nullptr);
+    glDebugMessageCallback(debug::openglCallBack, nullptr);
 
-    std::cout << glGetString(GL_VERSION) << "\n";  // Version of openGL
+    debug::log(glGetString(GL_VERSION), debug::severity::Notification);
 
     int flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);

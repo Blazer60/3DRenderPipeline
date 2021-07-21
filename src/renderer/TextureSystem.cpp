@@ -7,6 +7,7 @@
  */
 
 #include "TextureSystem.h"
+#include "DebugLogger.h"
 
 #include <glew.h>
 #include <stb_image.h>
@@ -85,8 +86,14 @@ unsigned int TextureSystem::createTextureArray(const std::vector<std::string> &p
             width = currWidth;
             height = currHeight;
         }
-        // All textures must be the same size. Path does not exists
-        if (currWidth != width || currHeight != height || !buffers[i]) { throw std::exception(); }
+        if (currWidth != width || currHeight != height)
+        {
+            debug::log("All textures must be the same size.", debug::severity::Major);
+        }
+        if (!buffers[i])
+        {
+            debug::log("Path does not exists for: " + paths[i], debug::severity::Major );
+        }
     }
 
     glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, width, height, static_cast<int>(paths.size()));

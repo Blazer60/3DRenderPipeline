@@ -19,7 +19,8 @@ public:
         auto typeId = typeid(Component).hash_code();
         if (mComponentIds.find(typeId) != std::end(mComponentIds))
         {
-            throw std::exception("This component has already been registered");
+            debug::log("Component " + ecs::toString<Component>() + " has already been registered.",
+                       debug::severity::Fatal);
         }
 
         // Add the component to the component Id map.
@@ -73,7 +74,7 @@ protected:
     {
         if (mComponentIds.find(typeId) == std::end(mComponentIds))
         {
-            throw std::exception("This component was not registered before use.");
+            debug::log("Component has not been registered before use.", debug::severity::Fatal);
         }
     }
 

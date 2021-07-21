@@ -8,13 +8,13 @@
 
 #include "EntityManager.h"
 
-#include <exception>
-
 ecs::entity EntityManager::createEntity()
 {
     if (mNextId == ecs::maxEntities)
     {
-        throw std::exception("Maximum amount of entities have already been created. Cannot deduce that next UUID for this Entity.");
+        debug::log("Maximum amount of entities have already been created.\n"
+                   "Cannot deduce the next UUID for this entity.",
+                   debug::severity::Fatal);
     }
     mEntityMap[mNextId] = ecs::signature();
     return mNextId++;
@@ -42,6 +42,6 @@ void EntityManager::validateEntity(ecs::entity entity)
 {
     if (mEntityMap.find(entity) == std::end(mEntityMap))
     {
-        throw std::exception("Entity does not exist.");
+        debug::log("Entity does not exist.",debug::severity::Fatal);
     }
 }

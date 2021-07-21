@@ -28,7 +28,8 @@ public:
     {
         if (mEntityToIndexMap.find(entity) != std::end(mEntityToIndexMap))
         {
-            throw std::exception("Entity has already been added to this component.");
+            debug::log(ecs::toString<Component>() + " already exists for this component.",
+                       debug::severity::Fatal);
         }
 
         index newIndex = mComponents.size();
@@ -72,7 +73,7 @@ protected:
     {
         if (mEntityToIndexMap.find(entity) == std::end(mEntityToIndexMap))
         {
-            throw std::exception("Entity does not exist for this component.");
+            debug::log("An entity with this component does not exist.", debug::severity::Fatal);
         }
     }
 

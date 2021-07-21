@@ -19,7 +19,8 @@ public:
         auto typeId = typeid(sys).hash_code();
         if (mSystems.find(typeId) != std::end(mSystems))
         {
-            throw std::exception("This system has already been registered.");
+            debug::log("System " + ecs::toString<sys>() + " has already been registered.",
+                    debug::severity::Fatal);
         }
         auto system = std::make_shared<sys>();
         mSystems.insert({ typeId, system });
@@ -32,7 +33,7 @@ public:
         auto typeId = typeid(sys).hash_code();
         if (mSystems.find(typeId) == std::end(mSystems))
         {
-            throw std::exception("This system has not been registered.");
+            debug::log("System " + ecs::toString<sys>() + " has not been registered.", debug::severity::Fatal);
         }
         mSignatures.insert({ typeId, signature });
     }

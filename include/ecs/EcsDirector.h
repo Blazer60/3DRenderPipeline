@@ -48,6 +48,7 @@ public:
     void addComponent<ModelData>(ecs::entity entity, ModelData component)
     {
         auto &[mesh, materials, matTextures] = component;
+        if (mesh.vertices.empty()) { return; }  // Object failed to load.
         addComponent(entity, mesh);
         addComponent(entity, RendererUniforms());
         addComponent(entity, materials);

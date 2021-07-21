@@ -15,5 +15,6 @@ ModelData loadModel(std::string_view path)
     {
         return loadObj(path);
     }
-    throw std::exception("Model type is not supported.");
+    debug::log("Model type is not supported. (" + std::string(path) + ")", debug::severity::Minor);
+    return {};
 }

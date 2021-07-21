@@ -87,8 +87,8 @@ glm::vec<count, float, glm::defaultp> createVec(std::string_view args)
         auto [pointer, ec] = std::from_chars(nextNumber, nextNumber + args.size(), position[i]);
         if (ec != std::errc())  // An error was produced by the args list.
         {
-            // Invalid args (args) for vector construction.
-            throw std::exception();
+            debug::log("Invalid args (" + std::string(args) + ") for vector construction",
+                       debug::severity::Major);
         }
         nextNumber = pointer + 1;  // There is always a space between numbers.
     }

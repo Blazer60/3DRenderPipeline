@@ -20,5 +20,11 @@ namespace ecs
     const size_t maxComponents = 32;
 
     typedef std::bitset<maxComponents> signature;
+
+    template<typename Component>
+    std::string toString()
+    {
+        return std::string(typeid(Component).name());
+    }
 }
 

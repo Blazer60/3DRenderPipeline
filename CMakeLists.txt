@@ -40,7 +40,7 @@ add_executable(${PROJECT_NAME}
         src/Main.cpp
 
         src/core/Core.cpp                       src/core/Core.h
-        src/core/GlDebugger.cpp                 src/core/GlDebugger.h
+        src/core/DebugLogger.cpp include/core/DebugLogger.h
         src/core/Scene.cpp                      include/core/Scene.h
         src/core/CameraSystem.cpp               include/core/CameraSystem.h
         src/core/CameraControllerSystem.cpp     include/core/CameraControllerSystem.h
@@ -80,6 +80,7 @@ add_executable(${PROJECT_NAME}
 target_precompile_headers(${PROJECT_NAME} PUBLIC
         <iostream> <vector> <unordered_map> <string> <string_view> <algorithm> <memory> <numeric>   # STL
         <glm.hpp> <gtx/quaternion.hpp> <glew.h>                                                     # Vendor
+        [["DebugLogger.h"]]                                                                         # Project
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -106,6 +107,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_compile_definitions(${PROJECT_NAME} PUBLIC
         GLEW_STATIC
         STB_IMAGE_IMPLEMENTATION
+        LOG_TO_FILE
+        LOG_TO_CONSOLE
 )
 
 find_package(OpenGL REQUIRED)
