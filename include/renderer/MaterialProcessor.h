@@ -17,10 +17,11 @@ public:
 
     void bind() const;
     static void unbind();
-    void setupMaterials(const std::vector<unsigned int> &materialIds, unsigned int diffuseTextureIds);
+    void setupMaterials(const std::vector<unsigned int> &materialIds, unsigned int diffuseTextureIds,
+                        unsigned int normalMapIds);
     unsigned int addMaterial(const Material &material);
 
-    Shader mShader { "../res/shaders/Default.shader" };
+    Shader mShader { "../res/shaders/Basic.shader" };
 protected:
     unsigned int mNextId { 0 };
     std::unordered_map<unsigned int, Material> mMaterials;
@@ -28,6 +29,7 @@ protected:
     unsigned int mRendererId { 0 };
     unsigned int mDefaultId{ 0 };
     unsigned int mDefaultKDiffuseTextureId{ 0 };
+    unsigned int mDefaultNormalTextureId{ 0 };
 };
 
 

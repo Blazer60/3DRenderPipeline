@@ -85,16 +85,16 @@ void Scene::registerEntities()
     mDirector.addComponent(cube, RendererUniforms());
 
     auto teapot = mDirector.createEntity();
-    mDirector.addComponent(teapot, Transform{ glm::vec3(0.f, 1.f, -5.f) });
-    mDirector.addComponent(teapot, loadModel("../res/models/CubeTest.obj"));
+    mDirector.addComponent(teapot, Transform{ glm::vec3(0.f, -1.f, 0.f) });
+    mDirector.addComponent(teapot, loadModel(R"(E:\Blender\Scenes\LoadingTest\LoadingDemo.obj)"));
 //
     auto tank = mDirector.createEntity();
-    mDirector.addComponent(tank, Transform{ glm::vec3(15.f, 1.f, 0.f) });
+    mDirector.addComponent(tank, Transform{ glm::vec3(0.f, 0.f, 15.f) });
     mDirector.addComponent(tank, loadModel("../res/models/CubesTextures.obj"));
 
     auto kirb = mDirector.createEntity();
     mDirector.addComponent(kirb, Transform{
-            glm::vec3(-15.f, 0.f, 0.f),
+            glm::vec3(0.f, 0.f, -15.f),
             glm::quat(),
             glm::vec3(1.f)
     });
@@ -111,9 +111,9 @@ void Scene::registerEntities()
 //    mDirector.addComponent(light, RendererUniforms());
 
     mLight = mDirector.createEntity();
-    mDirector.addComponent(mLight, PointLight { glm::vec3(1.f) });
+    mDirector.addComponent(mLight, PointLight { glm::vec3(1.f), 1.f, 150.f });
     mDirector.addComponent(mLight, Transform {
-        glm::vec3(0.f, 5.f, 0.f),
+        glm::vec3(0.f, 15.f, 0.f),
         glm::quat(),
         glm::vec3(0.1f)
     } );
@@ -147,10 +147,10 @@ void Scene::renderImGui()
 {
     auto &lightPos = mDirector.getComponent<Transform>(mLight);
     auto &lightValues = mDirector.getComponent<PointLight>(mLight);
-    ImGui::SliderFloat3("Pos", &lightPos.position[0], -10.f, 10.f);
+    ImGui::SliderFloat3("Pos", &lightPos.position[0], -30.f, 30.f);
     ImGui::SliderFloat3("Colour", &lightValues.kDiffuse[0], 0.f, 1.f);
     ImGui::SliderFloat("Intensity", &lightValues.intensity, 0.f, 1.f);
-    ImGui::SliderFloat("Fall Off", &lightValues.fallOff, 0.f, 10.f);
+    ImGui::SliderFloat("Fall Off", &lightValues.fallOff, 0.f, 1000.f);
     static bool wireFrame;
     ImGui::Checkbox("Wireframe", &wireFrame);
     if (wireFrame) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }

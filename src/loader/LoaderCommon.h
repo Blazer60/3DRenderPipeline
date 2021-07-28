@@ -34,6 +34,7 @@ struct ObjMaterial
     std::string mapKd;
     std::string mapKs;
     std::string mapKe;
+    std::string mapNormal;
 };
 
 /**

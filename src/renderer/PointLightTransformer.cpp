@@ -15,7 +15,7 @@ void PointLightTransformer::calculateLightPositions(Shader &shader)
     {
         const auto &lightTransform = getComponent<Transform>(entity);
         shader.setUniform(
-                "u_lights[" + std::to_string(i) + "].position",
+                "u_lights[" + std::to_string(i) + "].position_ws",
                 glm::vec4(lightTransform.position, 1.f)
         );
         ++i;
@@ -27,7 +27,7 @@ void PointLightTransformer::setShaderLights(ecs::entity mainCamera, Shader &shad
     calculateLightPositions(shader);
     int i = 0;
     const auto &cameraPosition = getComponent<Transform>(mainCamera).position;
-    shader.setUniform("u_cameraPosition", glm::vec4(-cameraPosition, 1.f));
+    shader.setUniform("u_camera_position_ws", glm::vec4(-cameraPosition, 1.f));
     for (const auto &entity : mEntities)
     {
         const auto &light = getComponent<PointLight>(entity);
@@ -35,7 +35,7 @@ void PointLightTransformer::setShaderLights(ecs::entity mainCamera, Shader &shad
         std::string stringI = std::to_string(i);
         shader.setUniform("u_lights[" + stringI + "].colour", glm::vec4(light.kDiffuse, 1.f));
         shader.setUniform("u_lights[" + stringI + "].intensity", light.intensity);
-        shader.setUniform("u_lights[" + stringI + "].fallOff", light.fallOff);
+        shader.setUniform("u_lights[" + stringI + "].fall_off", light.fallOff);
         ++i;
     }
 }

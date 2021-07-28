@@ -41,7 +41,7 @@ struct Camera
 {
     float fovY  { 0.46f };
     float zNear { 0.1f };
-    float zFar  { 50.f };
+    float zFar  { 150.f };
 };
 
 struct CameraController
@@ -58,6 +58,7 @@ struct RendererUniforms
     glm::mat4 modelMat { 1.f };
     std::vector <unsigned int> materialIds{};  // Not related to the uv index in vertices.
     unsigned int diffuseTexturesId { 0 };
+    unsigned int normalMapId { 0 };
 };
 
 struct Material  // Materials are not needed for rendering. RenderUniforms are however.
@@ -67,11 +68,13 @@ struct Material  // Materials are not needed for rendering. RenderUniforms are h
     unsigned int kDTextureIndex    { 0 };
     glm::vec3 kSpecular         { 1.f };
     float nSpecular             { 225 };
+    unsigned int normalMapIndex { 0 };
 };
 
 struct MaterialTexture
 {
     std::string kDPath;
+    std::string normalMapPath;
 };
 
 struct Textures

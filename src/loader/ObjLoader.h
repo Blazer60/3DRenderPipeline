@@ -22,20 +22,21 @@ struct vertexData;
 ModelData loadObj(std::string_view path);
 
 /**
- * Converts incoming data into vertices.
- * @param data The data you want to convert.
- * @param positions All valid vertex positions.
- * @param textureCoords All valid texture coords (uvs).
- * @param normals All normals (not used).
- * @return
+ * Creates a Vertex based on the incoming args in the form position[/[uvs]/[normals]].
+ * @note Assumes that all indices are valid and are one based.
+ * @param args typically in the form Pos/UV/Normal
+ * @param positions All positions that have currently been read from a file.
+ * @param uvs All Uvs that have currently been read from a file.
+ * @param normals All Normals that have currently been read from a file.
+ * @return A Vertex with it's Position, UV and normal being set (They can still be 0).
  */
-std::vector<Vertex> convertVertexData(const std::vector<vertexData> &data, const std::vector<glm::vec3> &positions,
-                                      const std::vector<glm::vec2> &textureCoords,
-                                      const std::vector<glm::vec3> &normals);
+Vertex
+createBaseVertex(std::string_view args, const std::vector<glm::vec3> &positions, const std::vector<glm::vec2> &uvs,
+                 const std::vector<glm::vec3> &normals, int materialId);
 
 /**
- * Creates vertex data based on an args strings.
- * @param args
- * @return
+ * Generate a repeating pattern based on the numbers of unique vertices supplied.
+ * @param uniqueIndices The indices that you want to be duplicated.
+ * @param outIndices The location that you want the indices to end up.
  */
-vertexData createVertexData(std::string_view args, unsigned int materialIndex);
+void generateIndices(const std::vector<unsigned int> &uniqueIndices, std::vector<unsigned int> &outIndices);

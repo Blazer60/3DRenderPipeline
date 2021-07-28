@@ -26,14 +26,18 @@ RendererSystem::RendererSystem()
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
 
     glEnableVertexAttribArray(0);  // Position
-    glEnableVertexAttribArray(1);  // Normal
-    glEnableVertexAttribArray(2);  // UV Coord
-    glEnableVertexAttribArray(3);  // Texture Id
+    glEnableVertexAttribArray(1);  // UV Coord
+    glEnableVertexAttribArray(2);  // Normal
+    glEnableVertexAttribArray(3);  // Tangent
+    glEnableVertexAttribArray(4);  // BiTangent
+    glEnableVertexAttribArray(5);  // Texture Id
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, position)));
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, normal)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, uvCoord)));
-    glVertexAttribIPointer(3, 1, GL_INT, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, textureId)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, uvCoord)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, normal)));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, tangent)));
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, biTangent)));
+    glVertexAttribIPointer(5, 1, GL_INT, Vertex::stride(), reinterpret_cast<void *>(offsetof(Vertex, textureId)));
 
     glClearColor(0.16f, 0.16f, 0.16f, 1.f);
 }
@@ -67,9 +71,10 @@ void RendererSystem::render()
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof (unsigned int), &mesh.indices[0], GL_DYNAMIC_DRAW);
 
         // Process Uniforms
-        mMaterialProcessor->mShader.setUniform("u_mvp", uniforms.mvp);
-        mMaterialProcessor->mShader.setUniform("u_modelMat", uniforms.modelMat);
-        mMaterialProcessor->setupMaterials(uniforms.materialIds, uniforms.diffuseTexturesId);
+        mMaterialProcessor->mShader.setUniform("u_mvp_matrix", uniforms.mvp);
+        mMaterialProcessor->mShader.setUniform("u_model_matrix", uniforms.modelMat);
+        mMaterialProcessor->mShader.setUniform("u_view_matrix", cameraMats.viewMatrix);
+        mMaterialProcessor->setupMaterials(uniforms.materialIds, uniforms.diffuseTexturesId, uniforms.normalMapId);
 
         glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, nullptr);
     }

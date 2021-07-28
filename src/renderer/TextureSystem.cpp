@@ -64,7 +64,8 @@ unsigned int TextureSystem::createTexture(const std::string &path)
     return id;
 }
 
-unsigned int TextureSystem::createTextureArray(const std::vector<std::string> &paths)
+unsigned int
+TextureSystem::createTextureArray(const std::vector<std::string> &paths, const TextureSystem::textureType type)
 {
     int width   { 1 };
     int height  { 1 };
@@ -104,7 +105,11 @@ unsigned int TextureSystem::createTextureArray(const std::vector<std::string> &p
             glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, buffers[i]);
             stbi_image_free(buffers[i]);
         }
-        else { createWhite(width, height, i); }
+        else
+        {
+            if (type == Normal) { createBlue(width, height, i); }
+            else                { createWhite(width, height, i); }
+        }
     }
 
     glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
@@ -117,6 +122,14 @@ void TextureSystem::createWhite(int width, int height, int index)
     memset(white, 0xff, 4 * width * height);
     glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, index, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, white);
     delete[] white;
+}
+
+void TextureSystem::createBlue(int width, int height, int index)
+{
+    auto *blue = new unsigned int[width * height];
+    memset(blue, 0x7f'7f'ff'ff, width * height);
+    glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, index, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, blue);
+    delete[] blue;
 }
 
 void TextureSystem::setDefaultTextureParams()

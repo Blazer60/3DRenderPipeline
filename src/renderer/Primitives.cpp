@@ -36,13 +36,14 @@ namespace primitives
         const auto topRight     = glm::vec2(1.f, 1.f);
         const auto topLeft      = glm::vec2(0.f, 1.f);
 
+        // Tangents, bi-tangents and texturesIds are not set.
         std::vector<Vertex> vertices {
-             Vertex{ ltb, topFace,    bottomRight }, Vertex{ rtb, topFace,    bottomLeft }, Vertex{ rtf, topFace,    topLeft }, Vertex{ ltf, topFace,    topRight },  // Top Face
-             Vertex{ rbb, backFace,   bottomRight }, Vertex{ rtb, backFace,   bottomLeft }, Vertex{ ltb, backFace,   topLeft }, Vertex{ lbb, backFace,   topRight },  // Back Face
-             Vertex{ rtf, rightFace,  bottomRight }, Vertex{ rtb, rightFace,  bottomLeft }, Vertex{ rbb, rightFace,  topLeft }, Vertex{ rbf, rightFace,  topRight },  // Right Face
-             Vertex{ ltf, leftFace,   bottomRight }, Vertex{ lbf, leftFace,   bottomLeft }, Vertex{ lbb, leftFace,   topLeft }, Vertex{ ltb, leftFace,   topRight },  // Left Face
-             Vertex{ rbf, frontFace,  bottomRight }, Vertex{ lbf, frontFace,  bottomLeft }, Vertex{ ltf, frontFace,  topLeft }, Vertex{ rtf, frontFace,  topRight },  // Front Face
-             Vertex{ lbb, bottomFace, bottomRight }, Vertex{ lbf, bottomFace, bottomLeft }, Vertex{ rbf, bottomFace, topLeft }, Vertex{ rbb, bottomFace, topRight },  // Bottom Face
+             Vertex{ ltb, bottomRight, topFace,     }, Vertex{ rtb, bottomLeft, topFace,     }, Vertex{ rtf, topLeft, topFace,     }, Vertex{ ltf, topRight, topFace,     },  // Top Face
+             Vertex{ rbb, bottomRight, backFace,    }, Vertex{ rtb, bottomLeft, backFace,    }, Vertex{ ltb, topLeft, backFace,    }, Vertex{ lbb, topRight, backFace,    },  // Back Face
+             Vertex{ rtf, bottomRight, rightFace,   }, Vertex{ rtb, bottomLeft, rightFace,   }, Vertex{ rbb, topLeft, rightFace,   }, Vertex{ rbf, topRight, rightFace,   },  // Right Face
+             Vertex{ ltf, bottomRight, leftFace,    }, Vertex{ lbf, bottomLeft, leftFace,    }, Vertex{ lbb, topLeft, leftFace,    }, Vertex{ ltb, topRight, leftFace,    },  // Left Face
+             Vertex{ rbf, bottomRight, frontFace,   }, Vertex{ lbf, bottomLeft, frontFace,   }, Vertex{ ltf, topLeft, frontFace,   }, Vertex{ rtf, topRight, frontFace,   },  // Front Face
+             Vertex{ lbb, bottomRight, bottomFace,  }, Vertex{ lbf, bottomLeft, bottomFace,  }, Vertex{ rbf, topLeft, bottomFace,  }, Vertex{ rbb, topRight, bottomFace,  },  // Bottom Face
         };
 
         std::vector<unsigned int> indices {
@@ -84,12 +85,12 @@ namespace primitives
         const auto topLeft      = glm::vec2(0.f, 1.f);
 
         std::vector<Vertex> vertices {
-                Vertex{ rtb, topFace,    bottomLeft }, Vertex{ ltb, topFace,    bottomRight }, Vertex{ ltf, topFace,    topRight }, Vertex{ rtf, topFace,    topLeft },  // Top Face
-                Vertex{ rtb, backFace,   bottomLeft }, Vertex{ rbb, backFace,   bottomRight }, Vertex{ lbb, backFace,   topRight }, Vertex{ ltb, backFace,   topLeft },  // Back Face
-                Vertex{ rtb, rightFace,  bottomLeft }, Vertex{ rtf, rightFace,  bottomRight }, Vertex{ rbf, rightFace,  topRight }, Vertex{ rbb, rightFace,  topLeft },  // Right Face
-                Vertex{ lbf, leftFace,   bottomLeft }, Vertex{ ltf, leftFace,   bottomRight }, Vertex{ ltb, leftFace,   topRight }, Vertex{ lbb, leftFace,   topLeft },  // Left Face
-                Vertex{ lbf, frontFace,  bottomLeft }, Vertex{ rbf, frontFace,  bottomRight }, Vertex{ rtf, frontFace,  topRight }, Vertex{ ltf, frontFace,  topLeft },  // Front Face
-                Vertex{ lbf, bottomFace, bottomLeft }, Vertex{ lbb, bottomFace, bottomRight }, Vertex{ rbb, bottomFace, topRight }, Vertex{ rbf, bottomFace, topLeft },  // Bottom Face
+                Vertex{ rtb, bottomLeft, topFace,     }, Vertex{ ltb, bottomRight, topFace,     }, Vertex{ ltf, topRight, topFace,     }, Vertex{ rtf, topLeft, topFace,     },  // Top Face
+                Vertex{ rtb, bottomLeft, backFace,    }, Vertex{ rbb, bottomRight, backFace,    }, Vertex{ lbb, topRight, backFace,    }, Vertex{ ltb, topLeft, backFace,    },  // Back Face
+                Vertex{ rtb, bottomLeft, rightFace,   }, Vertex{ rtf, bottomRight, rightFace,   }, Vertex{ rbf, topRight, rightFace,   }, Vertex{ rbb, topLeft, rightFace,   },  // Right Face
+                Vertex{ lbf, bottomLeft, leftFace,    }, Vertex{ ltf, bottomRight, leftFace,    }, Vertex{ ltb, topRight, leftFace,    }, Vertex{ lbb, topLeft, leftFace,    },  // Left Face
+                Vertex{ lbf, bottomLeft, frontFace,   }, Vertex{ rbf, bottomRight, frontFace,   }, Vertex{ rtf, topRight, frontFace,   }, Vertex{ ltf, topLeft, frontFace,   },  // Front Face
+                Vertex{ lbf, bottomLeft, bottomFace,  }, Vertex{ lbb, bottomRight, bottomFace,  }, Vertex{ rbb, topRight, bottomFace,  }, Vertex{ rbf, topLeft, bottomFace,  },  // Bottom Face
         };
 
         std::vector<unsigned int> indices {
